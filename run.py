@@ -14,22 +14,25 @@ def choose_difficulty():
     """
     The user chooses the difficulty
     """
-    difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
-    while difficulty not in ["easy", "medium", "hard"]:
-        print("Invalid difficulty, please choose between easy, medium or hard!")
-        difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
-    return difficulty
+    difficulties = {
+        "easy": 10,
+        "medium": 15,
+        "hard": 20,
+    }
+    print("Choose difficulty (easy, medium, hard): ")
+    while True:
+        difficulty = input("Enter your choice: ").lower()
+        if difficulty in difficulties:
+            return difficulty, difficulties[difficulty]
+        else:
+            print("Invalid difficulty! Please choose between easy, medium or hard!")
+    
 
-def generate_number(difficulty):
+def generate_number(difficulty_upper_bound):
     """
     Generates numbers depending on the difficulty
     """
-    if difficulty == "easy":
-        return random.randint(1, 10)
-    elif difficulty == "medium":
-        return random.randint(1, 15)
-    elif difficulty == "hard":
-        return random.randint(1, 20)
+    return random.randint(1, difficulty_upper_bound)
 
 def choose_rounds():
     """
@@ -41,31 +44,10 @@ def choose_rounds():
         rounds = input("Choose the number of rounds (3, 5 or 10): ")
     return int(rounds)            
 
-def run_game(difficulty, rounds):
-    """
-    A function that runs the game once difficulty and number of rounds are chosen
-    """
-    for round_num in range(1, rounds + 1):
-        print(f"\nRound {round_num}:")
-        secret_number = generate_number(difficulty)
-        print("The computer has picked a number.")
-        guess = None
-        attempts = 0 
-        while attempts < 2:
-            guess = int(input("Enter your guess: "))
-            attempts += 1
-            if guess < secret_number:
-                print("Higher!")
-            elif guess > secret_number:
-                print("Lower!")
-            else:
-                print(f"Congratulations! You've guessed the correct number({secret_number}) in {attempts} attempts.")
-                break
-        if attempts == 2:
-            print(f"Sorry, you didn't guess the correct number. The correct number was {secret_number}.")
+
 
 welcome_message() 
 difficulty = choose_difficulty()
 rounds = choose_rounds()   
-generate_number(difficulty)
-run_game(difficulty, rounds)
+secret_number = generate_number(difficulty)
+run_game(difficulty, rounds, secret_number)

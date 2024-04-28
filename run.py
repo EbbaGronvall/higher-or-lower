@@ -48,6 +48,8 @@ def run_game(difficulty_name, difficulty_upper_bound, rounds, secret_number):
     """
     A function that runs the game once difficulty and number of rounds are chosen
     """
+    user_score = 0
+    computer_score = 0 
     for round_num in range(1, rounds + 1):
         print(f"\nRound {round_num}:")
         print("The computer has picked a number.")
@@ -65,12 +67,20 @@ def run_game(difficulty_name, difficulty_upper_bound, rounds, secret_number):
                         print("Lower!")
                     else:
                         print(f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
+                        user_score += 1
                         break
                     attempts += 1
             except ValueError:
                 print(f"Invalid input! Please enter a valid number.")
         if attempts == 3:
-            print(f"Sorry, you didn't guess the correct number. The correct number was {secret_number}")                       
+            print(f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
+            computer_score += 1
+    if user_score < computer_score:
+        print("GAME OVER!")
+        print(f"You lost by {user_score} to {computer_score}..")
+    else:
+        print("YOU WON!")  
+        print(f"You won by {user_score} to {computer_score}!")                               
 
 
 welcome_message() 

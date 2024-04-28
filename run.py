@@ -1,4 +1,6 @@
 import random
+from colorama import Fore, init
+init(autoreset=True)
 def welcome_message():
     """
     Welcomes the user to the game and gives the instructions.
@@ -25,7 +27,7 @@ def choose_difficulty():
         if difficulty in difficulties:
             return difficulty, difficulties[difficulty]
         else:
-            print("Invalid difficulty! Please choose between easy, medium or hard!")
+            print(Fore.RED + "Invalid difficulty! Please choose between easy, medium or hard!")
     
 
 def generate_number(difficulty_upper_bound):
@@ -40,7 +42,7 @@ def choose_rounds():
     """
     rounds = input("Choose the number of rounds (3, 5 or 10): ")
     while rounds not in ["3", "5", "10"]:
-        print("Invalid number of sounds. Please choose 3, 5 or 10.")
+        print(Fore.RED + "Invalid number of rounds. Please choose 3, 5 or 10.")
         rounds = input("Choose the number of rounds (3, 5 or 10): ")
     return int(rounds)            
 
@@ -59,27 +61,27 @@ def run_game(difficulty_name, difficulty_upper_bound, rounds, secret_number):
             try:
                 guess = int(input(f"Enter your guess: "))
                 if guess < 1 or guess > difficulty_upper_bound:
-                    print(f"Invalid guess! Please enter a number between 1 and {difficulty_upper_bound}.")
+                    print(Fore.RED + f"Invalid guess! Please enter a number between 1 and {difficulty_upper_bound}.")
                 else:
                     if guess < secret_number:
                         print("Higher!")
                     elif guess > secret_number:
                         print("Lower!")
                     else:
-                        print(f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
+                        print(Fore.GREEN + f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
                         user_score += 1
                         break
                     attempts += 1
             except ValueError:
-                print(f"Invalid input! Please enter a valid number.")
+                print(Fore.RED + f"Invalid input! Please enter a valid number.")
         if attempts == 3:
-            print(f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
+            print(Fore.RED + f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
             computer_score += 1
     if user_score < computer_score:
-        print("GAME OVER!")
+        print(Fore.RED + "\nGAME OVER!")
         print(f"You lost by {user_score} to {computer_score}..")
     else:
-        print("YOU WON!")  
+        print(Fore.GREEN +"\nYOU WON!")  
         print(f"You won by {user_score} to {computer_score}!")                               
 
 

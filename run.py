@@ -1,4 +1,3 @@
-import math
 import random
 def welcome_message():
     """
@@ -42,6 +41,31 @@ def choose_rounds():
         rounds = input("Choose the number of rounds (3, 5 or 10): ")
     return int(rounds)            
 
+def run_game(difficulty, rounds):
+    """
+    A function that runs the game once difficulty and number of rounds are chosen
+    """
+    for round_num in range(1, rounds + 1):
+        print(f"\nRound {round_num}:")
+        secret_number = generate_number(difficulty)
+        print("The computer has picked a number.")
+        guess = None
+        attempts = 0 
+        while attempts < 2:
+            guess = int(input("Enter your guess: "))
+            attempts += 1
+            if guess < secret_number:
+                print("Higher!")
+            elif guess > secret_number:
+                print("Lower!")
+            else:
+                print(f"Congratulations! You've guessed the correct number({secret_number}) in {attempts} attempts.")
+                break
+        if attempts == 2:
+            print(f"Sorry, you didn't guess the correct number. The correct number was {secret_number}.")
+
 welcome_message() 
-choose_difficulty()   
-generate_number()
+difficulty = choose_difficulty()
+rounds = choose_rounds()   
+generate_number(difficulty)
+run_game(difficulty, rounds)

@@ -1,14 +1,18 @@
 import random
 from colorama import Fore, init
+from pyfiglet import Figlet
+f = Figlet(font='big')
 init(autoreset=True)
 def welcome_message():
     """
     Welcomes the user to the game and gives the instructions.
     """
-    print("Welcome to Higher or Lower!\nIn this game you are guessing which random number the computer have.\n")
+    
+    print(f.renderText("Welcome to Higher or Lower!"))
+    print("In this game you are guessing which random number the computer have.")
     print("To start with you have to choose the difficulty.\nThere is easy(numbers 1-10), medium(numbers 1-15) and hard(numbers 1-20)\n")  
     print("Then you will be asked to choose how many rounds you wanna go. 3, 5 or 10\n") 
-    print("Say you pick easy and 3 rounds. You will be asked to say a number between 1 and 10. If it is correct the computer will tell you so. If not the computer will tell you if the number is higher or lower. If you get it right this time you win the round, if not the computer wins the round.")
+    print("Say you pick easy and 3 rounds. You will be asked to say a number between 1 and 10. If it is correct the computer will tell you so. If not the computer will tell you if the number is higher or lower. You have 3 attempts to get it right otherwise the computer wins the round.")
     print("\nSo lets get started!")
 
  
@@ -21,9 +25,8 @@ def choose_difficulty():
         "medium": 15,
         "hard": 20,
     }
-    print("Choose difficulty (easy, medium, hard): ")
     while True:
-        difficulty = input("Enter your choice: ").lower()
+        difficulty = input("Choose the difficulty: ").lower()
         if difficulty in difficulties:
             return difficulty, difficulties[difficulty]
         else:
@@ -78,10 +81,10 @@ def run_game(difficulty_name, difficulty_upper_bound, rounds, secret_number):
             print(Fore.RED + f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
             computer_score += 1
     if user_score < computer_score:
-        print(Fore.RED + "\nGAME OVER!")
+        print(Fore.RED + f.renderText("GAME OVER!"))
         print(f"You lost by {user_score} to {computer_score}..")
     else:
-        print(Fore.GREEN +"\nYOU WON!")  
+        print(Fore.GREEN + f.renderText("YOU WON!"))  
         print(f"You won by {user_score} to {computer_score}!")                               
 
 
@@ -90,3 +93,5 @@ difficulty_name, difficulty_upper_bound = choose_difficulty()
 rounds = choose_rounds()   
 secret_number = generate_number(difficulty_upper_bound)
 run_game(difficulty_name, difficulty_upper_bound, rounds, secret_number)
+
+                              

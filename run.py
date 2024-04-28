@@ -10,6 +10,16 @@ def welcome_message():
     print("Say you pick easy and 3 rounds. You will be asked to say a number between 1 and 10. If it is correct the computer will tell you so. If not the computer will tell you if the number is higher or lower. If you get it right this time you win the round, if not the computer wins the round.")
     print("\nSo lets get started!")
 
+def choose_difficulty():
+    """
+    The user chooses the difficulty
+    """
+    difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
+    while difficulty not in ["easy", "medium", "hard"]:
+        print("Invalid difficulty, please choose between easy, medium or hard!")
+        difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
+    return difficulty
+    
 def generate_number(difficulty):
     """
     Generates numbers depending on the difficulty
@@ -21,7 +31,7 @@ def generate_number(difficulty):
     elif difficulty == "hard":
         return random.randint(1, 20)
     else:
-        print("Invalid difficulty, please choose between easy, medium or hard.")
         return None
-welcome_message()    
+welcome_message() 
+choose_difficulty()   
 generate_number()

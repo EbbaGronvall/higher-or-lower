@@ -21,6 +21,7 @@ def welcome_message():
     """
     print(instructions)
 
+
 def choose_difficulty():
     """
     The user chooses the difficulty
@@ -66,27 +67,40 @@ def run_game(difficulty_upper_bound, rounds, secret_number):
         guess = None
         attempts = 0
         while attempts < 3:
-            try:
-                guess = int(input(f"Enter your guess: "))
-                if guess < 1 or guess > difficulty_upper_bound:
-                    print(Fore.RED + f"Invalid guess! Please enter a number between 1 and {difficulty_upper_bound}.")
-                else:
-                    if guess < secret_number:
-                        print("Higher!")
-                    elif guess > secret_number:
-                        print("Lower!")
-                    else:
-                        print(Fore.GREEN + f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
-                        user_score += 1
-                        break
-                    attempts += 1
-            except ValueError:
-                print(Fore.RED + f"Invalid input! Please enter a valid number.")
-        if attempts == 3:
+            guess, attempts = check_answer(guess, secret_number, attempts)
+            #attempts += 1
+            if guess == secret_number:
+                user_score += 1
+                break
+            #attempts += 1
+        if guess != secret_number:
             print(Fore.RED + f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
             computer_score += 1
+            
+
     final_score(user_score, computer_score)        
-    
+
+def check_answer(guess, secret_number, attempts):
+    """
+    Checks to see if guess == secret_number
+    """    
+    try:
+        guess = int(input(f"Enter your guess: "))
+        if guess < 1 or guess > difficulty_upper_bound:
+            print(Fore.RED + f"Invalid guess! Please enter a number between 1 and {difficulty_upper_bound}.")
+        else:
+            if guess < secret_number:
+                print("Higher!")
+                attempts += 1
+            elif guess > secret_number:
+                print("Lower!")
+                attempts += 1   
+            else:
+                print(Fore.GREEN + f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
+                attempts += 1
+    except ValueError:
+        print(Fore.RED + f"Invalid input! Please enter a valid number.")
+    return guess, attempts
 
 def final_score(user_score, computer_score):
     """
@@ -95,6 +109,9 @@ def final_score(user_score, computer_score):
     if user_score < computer_score:
         print(Fore.RED + f.renderText("GAME OVER!"))
         print(f"You lost by {user_score} to {computer_score}..")
+    elif user_score == computer_score:
+        print(f.renderText("ITS A TIE!"))
+        print(f"You and the computer tied for first place with {user_score} to {computer_score}!")    
     else:
         print(Fore.GREEN + f.renderText("YOU WON!"))  
         print(f"You won by {user_score} to {computer_score}!")                          
@@ -105,4 +122,5 @@ if __name__ == "__main__":
     rounds = choose_rounds()   
     secret_number = generate_number(difficulty_upper_bound)
     run_game(difficulty_upper_bound, rounds, secret_number) 
+    
                               

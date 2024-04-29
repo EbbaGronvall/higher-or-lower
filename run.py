@@ -9,12 +9,17 @@ def welcome_message():
     Welcomes the user to the game and gives the instructions.
     """
     print(f.renderText("Welcome to Higher or Lower!"))
-    print("In this game you are guessing which random number the computer have.")
-    print("To start with you have to choose the difficulty.\n")
-    print("There is easy(numbers 1-10), medium(numbers 1-15) and hard(numbers 1-20)\n")  
-    print("Then you will be asked to choose how many rounds you wanna go. 3, 5 or 10\n") 
-    print("Say you pick easy and 3 rounds. You will be asked to say a number between 1 and 10. If it is correct the computer will tell you so. If not the computer will tell you if the number is higher or lower. You have 3 attempts to get it right otherwise the computer wins the round.")
-    print("\nSo lets get started!")
+    instructions = """In this game you are guessing which random number the computer have.
+    To start with you have to choose the difficulty.
+    There is easy(numbers 1-10), medium(numbers 1-15) and hard(numbers 1-20).
+    Then you will be asked to choose how many rounds you wanna go. 3, 5 or 10.
+    Say you pick easy and 3 rounds. You will be asked to say a number between 1 and 10. 
+    If it is correct the computer will tell you so.
+    If not the computer will tell you if the number is higher or lower. 
+    You have 3 attempts to get it right otherwise the computer wins the round.
+    So lets get started!
+    """
+    print(instructions)
 
 def choose_difficulty():
     """
@@ -80,15 +85,24 @@ def run_game(difficulty_upper_bound, rounds, secret_number):
         if attempts == 3:
             print(Fore.RED + f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
             computer_score += 1
+    final_score(user_score, computer_score)        
+    
+
+def final_score(user_score, computer_score):
+    """
+    Checks to see if the user won or lost
+    """
     if user_score < computer_score:
         print(Fore.RED + f.renderText("GAME OVER!"))
         print(f"You lost by {user_score} to {computer_score}..")
     else:
         print(Fore.GREEN + f.renderText("YOU WON!"))  
-        print(f"You won by {user_score} to {computer_score}!")                               
+        print(f"You won by {user_score} to {computer_score}!")                          
 
-welcome_message() 
-difficulty_name, difficulty_upper_bound = choose_difficulty()
-rounds = choose_rounds()   
-secret_number = generate_number(difficulty_upper_bound)
-run_game(difficulty_upper_bound, rounds, secret_number)                           
+if __name__ == "__main__":
+    welcome_message() 
+    difficulty_name, difficulty_upper_bound = choose_difficulty()
+    rounds = choose_rounds()   
+    secret_number = generate_number(difficulty_upper_bound)
+    run_game(difficulty_upper_bound, rounds, secret_number) 
+                              

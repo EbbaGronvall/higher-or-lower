@@ -20,6 +20,20 @@ def welcome_message():
     So lets get started!
     """
     print(instructions)
+user_name = None
+def get_name(user_name):
+    """
+    The user is asked to put in their name for personalization
+    """
+    while True:
+        try:
+            user_name = input("But firstly, please enter your name: ").capitalize()
+            if not user_name.isalpha():
+                raise ValueError(Fore.RED + "Invalid input! Please enter your name using letters only.")
+            print(f"Let's go {user_name}!\n")
+            break
+        except ValueError:
+            print(Fore.RED + f"Invalid input! Please enter your name using letters only.")  
 
 
 def choose_difficulty():
@@ -38,11 +52,7 @@ def choose_difficulty():
         else:
             print(Fore.RED + "Invalid difficulty! Please choose between easy, medium or hard!")
 
-def generate_number(difficulty_upper_bound):
-    """
-    Generates numbers depending on the difficulty
-    """
-    return random.randint(1, difficulty_upper_bound)
+
 
 def choose_rounds():
     """
@@ -53,6 +63,14 @@ def choose_rounds():
         print(Fore.RED + "Invalid number of rounds. Please choose 3, 5 or 10.")
         rounds = input("Choose the number of rounds (3, 5 or 10): ")
     return int(rounds) 
+
+
+def generate_number(difficulty_upper_bound):
+    """
+    Generates numbers depending on the difficulty
+    """
+    return random.randint(1, difficulty_upper_bound)
+
            
 def run_game(difficulty_upper_bound, rounds, secret_number):
     """
@@ -110,7 +128,7 @@ def final_score(user_score, computer_score):
         print(Fore.RED + f.renderText("GAME OVER!"))
         print(f"You lost by {user_score} to {computer_score}..")
     elif user_score == computer_score:
-        print(f.renderText("ITS A TIE!"))
+        print(f.renderText("IT'S A TIE!"))
         print(f"You and the computer tied for first place with {user_score} to {computer_score}!")    
     else:
         print(Fore.GREEN + f.renderText("YOU WON!"))  
@@ -118,6 +136,7 @@ def final_score(user_score, computer_score):
 
 if __name__ == "__main__":
     welcome_message() 
+    get_name(user_name)
     difficulty_name, difficulty_upper_bound = choose_difficulty()
     rounds = choose_rounds()   
     secret_number = generate_number(difficulty_upper_bound)

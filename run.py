@@ -20,6 +20,7 @@ def welcome_message():
     So lets get started!
     """
     print(instructions)
+
 user_name = None
 def get_name(user_name):
     """
@@ -33,7 +34,8 @@ def get_name(user_name):
             print(f"Let's go {user_name}!\n")
             break
         except ValueError:
-            print(Fore.RED + f"Invalid input! Please enter your name using letters only.")  
+            print(Fore.RED + f"Invalid input! Please enter your name using letters only.") 
+    return user_name             
 
 
 def choose_difficulty():
@@ -72,7 +74,7 @@ def generate_number(difficulty_upper_bound):
     return random.randint(1, difficulty_upper_bound)
 
            
-def run_game(difficulty_upper_bound, rounds, secret_number):
+def run_game(difficulty_upper_bound, rounds, secret_number, user_name):
     """
     A function that runs the game once difficulty and number of rounds are chosen
     """
@@ -85,20 +87,20 @@ def run_game(difficulty_upper_bound, rounds, secret_number):
         guess = None
         attempts = 0
         while attempts < 3:
-            guess, attempts = check_answer(guess, secret_number, attempts)
-            #attempts += 1
+            guess, attempts = check_answer(guess, secret_number, attempts, user_name)
+            
             if guess == secret_number:
                 user_score += 1
                 break
-            #attempts += 1
+            
         if guess != secret_number:
-            print(Fore.RED + f"Sorry, you didn't guess the correct number. The correct number was {secret_number}") 
+            print(Fore.RED + f"Sorry {user_name}, you didn't guess the correct number. The correct number was {secret_number}") 
             computer_score += 1
             
 
-    final_score(user_score, computer_score)        
+    final_score(user_score, computer_score, user_name)        
 
-def check_answer(guess, secret_number, attempts):
+def check_answer(guess, secret_number, attempts, user_name):
     """
     Checks to see if guess == secret_number
     """    
@@ -114,32 +116,42 @@ def check_answer(guess, secret_number, attempts):
                 print("Lower!")
                 attempts += 1   
             else:
-                print(Fore.GREEN + f"Congratulations! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
+                print(Fore.GREEN + f"Congratulations {user_name}! You've guessed the correct number ({secret_number}) in {attempts + 1} attempts.") 
                 attempts += 1
     except ValueError:
         print(Fore.RED + f"Invalid input! Please enter a valid number.")
     return guess, attempts
 
-def final_score(user_score, computer_score):
+
+def final_score(user_score, computer_score, user_name):
     """
     Checks to see if the user won or lost
     """
-    if user_score < computer_score:
-        print(Fore.RED + f.renderText("GAME OVER!"))
-        print(f"You lost by {user_score} to {computer_score}..")
-    elif user_score == computer_score:
+    
+    if user_score == computer_score:
         print(f.renderText("IT'S A TIE!"))
         print(f"You and the computer tied for first place with {user_score} to {computer_score}!")    
+    elif computer_score  == user_score + 1:
+        print(Fore.RED + f.renderText("SO CLOSE"))
+        print(f"That was so close {user_name}! You lost by only 1 point..")
+        print(f"The final score is {user_score} to {computer_score}..") 
+    elif user_score == computer_score + 1:
+        print(Fore.GREEN + f.renderText("A WIN IS A WIN"))
+        print(f"Wow {user_name} you won by just 1 point!")
+        print(f"The final score is {user_score} to {computer_score}.") 
+    elif user_score < computer_score:
+        print(Fore.RED + f.renderText("GAME OVER!"))
+        print(f"Sorry {user_name}.. You lost by {user_score} to {computer_score}..")       
     else:
         print(Fore.GREEN + f.renderText("YOU WON!"))  
-        print(f"You won by {user_score} to {computer_score}!")                          
+        print(f"Great job {user_name}! You won by {user_score} to {computer_score}!")                          
 
 if __name__ == "__main__":
     welcome_message() 
-    get_name(user_name)
+    user_name = get_name(user_name)
     difficulty_name, difficulty_upper_bound = choose_difficulty()
     rounds = choose_rounds()   
     secret_number = generate_number(difficulty_upper_bound)
-    run_game(difficulty_upper_bound, rounds, secret_number) 
+    run_game(difficulty_upper_bound, rounds, secret_number, user_name) 
     
                               

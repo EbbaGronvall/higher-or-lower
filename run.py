@@ -25,10 +25,7 @@ def welcome_message():
     print(instructions)
 
 
-user_name = None
-
-
-def get_name(user_name):
+def get_name():
     """
     The user is asked to put in their name for personalization
     """
@@ -102,7 +99,7 @@ def run_game(difficulty_upper_bound, rounds, secret_number, user_name):
                 break
         if guess != secret_number:
             print(Fore.RED + f"Sorry {user_name}, you didn't guess the correct"
-                           + f" number. The correct number was {secret_number}")
+                           + f" number. The correct number is {secret_number}")
             computer_score += 1
     final_score(user_score, computer_score, user_name)
 
@@ -140,7 +137,7 @@ def final_score(user_score, computer_score, user_name):
     if user_score == computer_score:
         print(f.renderText("IT'S A TIE!"))
         print(f"You and the computer tied for first place with {user_score} to"
-              + " {computer_score}!")
+              + f" {computer_score}!")
     elif computer_score == user_score + 1:
         print(Fore.RED + f.renderText("SO CLOSE"))
         print(f"That was so close {user_name}! You lost by only 1 point..")
@@ -152,16 +149,16 @@ def final_score(user_score, computer_score, user_name):
     elif user_score < computer_score:
         print(Fore.RED + f.renderText("GAME OVER!"))
         print(f"Sorry {user_name}.. You lost by {user_score} to"
-              + " {computer_score}..")
+              + f" {computer_score}..")
     else:
         print(Fore.GREEN + f.renderText("YOU WON!"))
         print(f"Great job {user_name}! You won by {user_score} to"
-              + " {computer_score}!")
+              + f" {computer_score}!")
 
 
 if __name__ == "__main__":
     welcome_message()
-    user_name = get_name(user_name)
+    user_name = get_name()
     difficulty_name, difficulty_upper_bound = choose_difficulty()
     rounds = choose_rounds()
     secret_number = generate_number(difficulty_upper_bound)

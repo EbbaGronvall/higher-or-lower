@@ -34,7 +34,7 @@ def get_name(user_name):
     """
     while True:
         try:
-            user_name = input("First please enter your name: ").capitalize()
+            user_name = input("First please enter your name:\n").capitalize()
             if not user_name.isalpha():
                 raise ValueError(Fore.RED + "Invalid input! Please enter your"
                                           + " name using letters only.")
@@ -56,7 +56,7 @@ def choose_difficulty():
         "hard": 20,
     }
     while True:
-        difficulty = input("Choose the difficulty: ").lower()
+        difficulty = input("Choose the difficulty:\n").lower()
         if difficulty in difficulties:
             return difficulty, difficulties[difficulty]
         else:
@@ -68,7 +68,7 @@ def choose_rounds():
     """
     The user chooses number of rounds they want to play
     """
-    rounds = input("Choose the number of rounds (3, 5 or 10): ")
+    rounds = input("Choose the number of rounds (3, 5 or 10):\n")
     while rounds not in ["3", "5", "10"]:
         print(Fore.RED + "Invalid number of rounds. Please choose 3, 5 or 10.")
         rounds = input("Choose the number of rounds (3, 5 or 10): ")
@@ -112,7 +112,7 @@ def check_answer(guess, secret_number, attempts, user_name):
     Checks to see if guess == secret_number
     """
     try:
-        guess = int(input(f"Enter your guess: "))
+        guess = int(input(f"Enter your guess:\n"))
         if guess < 1 or guess > difficulty_upper_bound:
             print(Fore.RED + f"Invalid guess! Please enter a number between"
                            + f" 1 and {difficulty_upper_bound}.")

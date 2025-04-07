@@ -1,5 +1,8 @@
 # Higher or Lower 
+## Active webpage
+https://higher-or-lower-5d6e66fc2378.herokuapp.com/
 
+## Introduction
 Higher or Lower is a game that is for anyone who wants to play with chance and numbers. The game is based on a swedish cardgame that is often used as a drinking-game with the same name. The user is to guess what random number within the difficulty-range the computer has generated within three attempts or the computer gets a point.   
 ![A screenshot of the welcome message](documentation/welcome-message.PNG) 
 ## How to play 
